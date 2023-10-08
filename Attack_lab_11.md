@@ -16,3 +16,15 @@ Account                              SubscriptionName TenantId                  
 
 ```
 
+Enumeration, Get-AzADApplication:
+
+```
+PS C:\Users\studentuser107> Get-AzADApplication
+
+DisplayName         Id                                   AppId
+-----------         --                                   -----
+mailapp             0a88da02-e9f4-428a-ab4e-aa94f12e1225 f0823e33-c430-4dd2-a56a-dca3c3a346a4
+AbuseGraphAPIforCAP 0c9b0706-33fe-414a-955f-9b28284ce578 2b3b473a-1de0-4e44-a19c-5aa9001e02e3
+AuthDemo            78e7dfaa-44f8-40bb-89d8-6d26c34a1928 175fff98-c013-4e4e-a58b-0b62de044432
+resourcesapp        ee7a977f-a5f7-4790-b682-a6ea8e81701a 7e7730b1-29ab-4adf-bb20-7ae61987d01f
+```
