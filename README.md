@@ -27,6 +27,27 @@ d-----         7/1/2022   3:48 AM                PowerZure
 
 ### Enumerate Azure subdomains (pharmacorp):
 
+Edit permutations dictionary file:
+
+```
+PS C:\Users\studentuser107> type C:\AzAppsec\Tools\MicroBurst\Misc\permutations.txt
+$root
+$web
+access-logs
+accounting
+api
+assets
+azure
+azure-logs
+chef
+client
+conf
+confidential
+config
+configuration
+...
+```
+
 ```
 Import-Module C:\AzAppsec\Tools\MicroBurst\Misc\Invoke-EnumerateAzureSubDomains.ps1
 Invoke-EnumerateAzureSubDomains -Base pharmacorp -Verbose
