@@ -1,6 +1,17 @@
 # CAWASP
 Certification
 
+## Index
+
+    1. Attack_lab_1:(Attack_lab_1.md)
+    2. Attack_lab_4:(Attack_lab_4.md)
+
+
+
+## Certification Lab Diagram:
+
+![diagram](diagram.png)
+
 ## Certification Tools:
 
 ```
@@ -25,44 +36,4 @@ d-----         7/1/2022   3:48 AM                PowerZure
 
 ```
 
-### Enumerate Azure subdomains (pharmacorp):
 
-Edit permutations dictionary file:
-
-```
-PS C:\Users\studentuser107> type C:\AzAppsec\Tools\MicroBurst\Misc\permutations.txt
-$root
-$web
-access-logs
-accounting
-api
-assets
-azure
-azure-logs
-chef
-client
-conf
-confidential
-config
-configuration
-...
-```
-
-```
-Import-Module C:\AzAppsec\Tools\MicroBurst\Misc\Invoke-EnumerateAzureSubDomains.ps1
-Invoke-EnumerateAzureSubDomains -Base pharmacorp -Verbose
-VERBOSE: Found pharmacorp.onmicrosoft.com
-VERBOSE: Found pharmacorp.mail.protection.outlook.com
-VERBOSE: Found pharmacorp.sharepoint.com
-VERBOSE: Found pharmacorp-my.sharepoint.com
-VERBOSE: Found pharmacorp-web.sharepoint.com
-
-Subdomain                              Service
----------                              -------
-pharmacorp.mail.protection.outlook.com Email
-pharmacorp.onmicrosoft.com             Microsoft Hosted Domain
-pharmacorp-web.sharepoint.com          SharePoint
-pharmacorp-my.sharepoint.com           SharePoint
-pharmacorp.sharepoint.com              SharePoint
-
-```
