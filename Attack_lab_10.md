@@ -229,3 +229,16 @@ JWT token decoded:
   "xms_tcdt": "1655353628"
 }
 ```
+Using access token, from student machine Import AzureAD Module and using bearer and credentials for authentication:
+
+```
+PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> Import-Module C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140\AzureAD.psd1
+PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> $Access_Token="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZTBmOTk5YzEtODZlZS00N2EwLWJmZDUtMTg0NzAxNTRiN2NkLyIsImlhdCI6MTY5Njc4NDQxOSwibmJmIjoxNjk2Nzg0NDE5LCJleHAiOjE2OTY4NzExMTksImFpbyI6IkUyRmdZR0RLa1AxOFh1ZE1xa2ZaeXU4dGRkY2lBUT09IiwiYXBwaWQiOiIzMzI5ZmVhNy02NDJlLTRjMDktYjFhZC1kOGVkYmUxNDAyNjciLCJhcHBpZGFjciI6IjIiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9lMGY5OTljMS04NmVlLTQ3YTAtYmZkNS0xODQ3MDE1NGI3Y2QvIiwiaWR0eXAiOiJhcHAiLCJvaWQiOiI3ZGY5YWU1Ny0zZWI5LTQzN2MtYTBlMi03MTQyODM3ODRjZGQiLCJyaCI6IjAuQVhFQXdabjU0TzZHb0VlXzFSaEhBVlMzelVaSWYza0F1dGRQdWtQYXdmajJNQk9IQUFBLiIsInN1YiI6IjdkZjlhZTU3LTNlYjktNDM3Yy1hMGUyLTcxNDI4Mzc4NGNkZCIsInRpZCI6ImUwZjk5OWMxLTg2ZWUtNDdhMC1iZmQ1LTE4NDcwMTU0YjdjZCIsInV0aSI6IklTdWFheVBQVFV5c1hFbE80ajQ5QUEiLCJ2ZXIiOiIxLjAiLCJ4bXNfY2FlIjoiMSIsInhtc19taXJpZCI6Ii9zdWJzY3JpcHRpb25zL2FhYzAyZjc0LWIwZDItNDVkMi04ZmJjLThkMzNmMjc0MTE2Zi9yZXNvdXJjZWdyb3Vwcy9BbmFseXRpY3MvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvYW5hbHl0aWNzcGhhcm1hY29ycCIsInhtc190Y2R0IjoiMTY1NTM1MzYyOCJ9.PDuxy0ZHbTK3L1DhVI6C6MfCJow1VvF5Xjrwm2CGGbJpU89Qnr_5S2F9P1EBYNrUmChq7FX4mRss7EsWFUbTY-jAr3ZAdGNxJo1FknBMPmDC7ZoSxV3aLZ8JBNWH4SZtUrh6rlBC8T2020jyPCDb4tWug6xcskRsJyORKovm2OxKsbS-0f8AkrWeqXGdVhwQM3YjPW4Gg-Jv4JTRVRvwho2NCLkhNUYKIcVUFIIFeoPS5GLBHWjXjh7zCC1paG8noVBaX15DAnroeS_N__LlDzmTN8geyuCyCDWvqSKufZU7zc-AtNH_zUa49eC8XFue94j8siuXEGk1OE6cqGcoyg"
+PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> Connect-AzAccount -AccessToken $Access_Token -AccountId 3329FEA7-642E-4C09-B1AD-D8EDBE140267
+
+Account                              SubscriptionName TenantId                             Environment
+-------                              ---------------- --------                             -----------
+3329FEA7-642E-4C09-B1AD-D8EDBE140267 PharmaCorp       e0f999c1-86ee-47a0-bfd5-18470154b7cd AzureCloud
+```
+
+
