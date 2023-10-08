@@ -28,11 +28,53 @@ AbuseGraphAPIforCAP 0c9b0706-33fe-414a-955f-9b28284ce578 2b3b473a-1de0-4e44-a19c
 AuthDemo            78e7dfaa-44f8-40bb-89d8-6d26c34a1928 175fff98-c013-4e4e-a58b-0b62de044432
 resourcesapp        ee7a977f-a5f7-4790-b682-a6ea8e81701a 7e7730b1-29ab-4adf-bb20-7ae61987d01f
 ```
-Review the permissions:
+Create script for validation:
 ```
+Import-Module C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140\AzureAD.psd1
+$password= ConvertTo-SecureString '~9j8Q~f339gnUfSBxSO5yuQXM6ztfCBL8LPjXa3I' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential('7e7730b1-29ab-4adf-bb20-7ae61987d01f', $password)
+Connect-AzAccount -ServicePrincipal -Credential $creds -Tenant e0f999c1-86ee-47a0-bfd5-18470154b7cd
+Get-AzADApplication
 $GraphToken = (Get-AzAccessToken -ResourceUrl https://graph.microsoft.com).Token
+Write-Host "Application: resourcesapp "
 $Params = @{ 
-"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals/e0c80e68-d141-4bd4-9bba-37b0bd58a48b/ownedObjects"
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals(appid='{7e7730b1-29ab-4adf-bb20-7ae61987d01f}')/ownedObjects"
+"Method" = "GET" 
+"Headers" = @{ 
+"Authorization" = "Bearer $GraphToken" 
+"Content-Type" = "application/json"
+}
+}
+$Result = Invoke-RestMethod @Params -UseBasicParsing
+$Result.value
+
+Write-Host "Application: AuthDemo "
+$Params = @{ 
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals(appid='{175fff98-c013-4e4e-a58b-0b62de044432}')/ownedObjects"
+"Method" = "GET" 
+"Headers" = @{ 
+"Authorization" = "Bearer $GraphToken" 
+"Content-Type" = "application/json"
+}
+}
+$Result = Invoke-RestMethod @Params -UseBasicParsing
+$Result.value
+
+Write-Host "Application: AbuseGraphAPIforCAP "
+$Params = @{ 
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals(appid='{2b3b473a-1de0-4e44-a19c-5aa9001e02e3}')/ownedObjects"
+"Method" = "GET" 
+"Headers" = @{ 
+"Authorization" = "Bearer $GraphToken" 
+"Content-Type" = "application/json"
+}
+}
+$Result = Invoke-RestMethod @Params -UseBasicParsing
+$Result.value
+
+Write-Host "Application: mailapp "
+$Params = @{ 
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals(appid='{f0823e33-c430-4dd2-a56a-dca3c3a346a4}')/ownedObjects"
 "Method" = "GET" 
 "Headers" = @{ 
 "Authorization" = "Bearer $GraphToken" 
@@ -43,8 +85,64 @@ $Result = Invoke-RestMethod @Params -UseBasicParsing
 $Result.value
 
 ```
-
+Complete Output:
 ```
+PS C:\Users\studentuser107> Import-Module C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140\AzureAD.psd1
+$password= ConvertTo-SecureString '~9j8Q~f339gnUfSBxSO5yuQXM6ztfCBL8LPjXa3I' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential('7e7730b1-29ab-4adf-bb20-7ae61987d01f', $password)
+Connect-AzAccount -ServicePrincipal -Credential $creds -Tenant e0f999c1-86ee-47a0-bfd5-18470154b7cd
+Get-AzADApplication
+$GraphToken = (Get-AzAccessToken -ResourceUrl https://graph.microsoft.com).Token
+Write-Host "Application: resourcesapp "
+$Params = @{ 
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals(appid='{7e7730b1-29ab-4adf-bb20-7ae61987d01f}')/ownedObjects"
+"Method" = "GET" 
+"Headers" = @{ 
+"Authorization" = "Bearer $GraphToken" 
+"Content-Type" = "application/json"
+}
+}
+$Result = Invoke-RestMethod @Params -UseBasicParsing
+$Result.value
+
+Write-Host "Application: AuthDemo "
+$Params = @{ 
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals(appid='{175fff98-c013-4e4e-a58b-0b62de044432}')/ownedObjects"
+"Method" = "GET" 
+"Headers" = @{ 
+"Authorization" = "Bearer $GraphToken" 
+"Content-Type" = "application/json"
+}
+}
+$Result = Invoke-RestMethod @Params -UseBasicParsing
+$Result.value
+
+Write-Host "Application: AbuseGraphAPIforCAP "
+$Params = @{ 
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals(appid='{2b3b473a-1de0-4e44-a19c-5aa9001e02e3}')/ownedObjects"
+"Method" = "GET" 
+"Headers" = @{ 
+"Authorization" = "Bearer $GraphToken" 
+"Content-Type" = "application/json"
+}
+}
+$Result = Invoke-RestMethod @Params -UseBasicParsing
+$Result.value
+
+Write-Host "Application: mailapp "
+$Params = @{ 
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals(appid='{f0823e33-c430-4dd2-a56a-dca3c3a346a4}')/ownedObjects"
+"Method" = "GET" 
+"Headers" = @{ 
+"Authorization" = "Bearer $GraphToken" 
+"Content-Type" = "application/json"
+}
+}
+$Result = Invoke-RestMethod @Params -UseBasicParsing
+$Result.value
+WARNING: The provided service principal secret will be included in the 'AzureRmContext.json' file found in the user profile ( C:\Users\studentuser107\.A
+zure ). Please ensure that this directory has appropriate protections.
+
 Account                              SubscriptionName TenantId                             Environment
 -------                              ---------------- --------                             -----------
 7e7730b1-29ab-4adf-bb20-7ae61987d01f                  e0f999c1-86ee-47a0-bfd5-18470154b7cd AzureCloud 
@@ -398,6 +496,7 @@ Web                              : {
                                    }
 AdditionalProperties             : {[verifiedPublisher, System.Collections.Generic.Dictionary`2[System.String,System.Object]]}
 
+Application: resourcesapp 
 
 @odata.type                       : #microsoft.graph.application
 id                                : 0a88da02-e9f4-428a-ab4e-aa94f12e1225
@@ -484,4 +583,12 @@ passwordCredentials                    : {@{customKeyIdentifier=; displayName=Pa
                                          keyId=38020566-de42-4869-acd8-590f02513880; secretText=; startDateTime=2023-07-16T13:06:06.0126774Z}}
 resourceSpecificApplicationPermissions : {}
 verifiedPublisher                      : @{displayName=; verifiedPublisherId=; addedDateTime=}
+
+Application: AuthDemo 
+Application: AbuseGraphAPIforCAP 
+Application: mailapp 
+
+
+
+PS C:\Users\studentuser107> 
 ```
