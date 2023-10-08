@@ -81,3 +81,11 @@ resourceDisplayName  : Microsoft Graph
 resourceId           : c44d6d94-e2cc-4f30-a0d0-2e37682b2978
 
 ```
+Validate permissions reference from Microsoft azure documentaiton:
+```
+https://learn.microsoft.com/en-us/graph/permissions-reference#all-permissions-and-ids
+
+Mail.Read	Application	810c84a8-4a9e-49e6-bf7d-12d183f40d01
+User.Read.All	Application	df021288-bdef-4463-88db-98f22de89214
+```
+It's means that the current application could read every users and mails .
