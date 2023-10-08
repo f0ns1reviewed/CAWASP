@@ -1,7 +1,7 @@
 # Attack Lab 9
 
 ```
--Find and exploit the File Upload vulnerability and execute OS Level command on the contact application (https://contactpharmacorp.azurewebsites.net/)
+- Find and exploit the File Upload vulnerability and execute OS Level command on the contact application (https://contactpharmacorp.azurewebsites.net/)
 − Extract the information from the Application settings
 ```
 
