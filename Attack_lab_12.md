@@ -28,3 +28,56 @@ Account                              SubscriptionName TenantId                  
 -------                              ---------------- --------                             -----------
 f0823e33-c430-4dd2-a56a-dca3c3a346a4                  e0f999c1-86ee-47a0-bfd5-18470154b7cd AzureCloud 
 ```
+With the current logged user extract and enumerate roleassigment:
+
+```
+$GraphToken = (Get-AzAccessToken -ResourceUrl https://graph.microsoft.com).Token
+$Params = @{
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals/4a9a9c00-bf17-43d8-b437-fe8144c8df15/appRoleAssignments"
+"Method" = "GET"
+"Headers" = @{
+"Authorization" = "Bearer $GraphToken"
+"Content-Type" = "application/json"
+}
+}
+$RoleAssignments = Invoke-RestMethod @Params -UseBasicParsing
+$RoleAssignments.value
+```
+execution output:
+
+```
+PS C:\Users\studentuser107> $Params = @{
+"URI" = "https://graph.microsoft.com/v1.0/servicePrincipals/4a9a9c00-bf17-43d8-b437-fe8144c8df15/appRoleAssignments"
+"Method" = "GET"
+"Headers" = @{
+"Authorization" = "Bearer $GraphToken"
+"Content-Type" = "application/json"
+}
+}
+
+PS C:\Users\studentuser107> $RoleAssignments = Invoke-RestMethod @Params -UseBasicParsing
+
+PS C:\Users\studentuser107> $RoleAssignments.value
+
+
+id                   : AJyaShe_2EO0N_6BRMjfFS3Mt2NL-w5JqNFAw2e_2Cg
+deletedDateTime      : 
+appRoleId            : df021288-bdef-4463-88db-98f22de89214
+createdDateTime      : 2022-06-20T11:06:13.5594346Z
+principalDisplayName : mailapp
+principalId          : 4a9a9c00-bf17-43d8-b437-fe8144c8df15
+principalType        : ServicePrincipal
+resourceDisplayName  : Microsoft Graph
+resourceId           : c44d6d94-e2cc-4f30-a0d0-2e37682b2978
+
+id                   : AJyaShe_2EO0N_6BRMjfFbksvwwU2tFCv0Ch_bDHaJ8
+deletedDateTime      : 
+appRoleId            : 810c84a8-4a9e-49e6-bf7d-12d183f40d01
+createdDateTime      : 2022-06-20T11:06:13.7469384Z
+principalDisplayName : mailapp
+principalId          : 4a9a9c00-bf17-43d8-b437-fe8144c8df15
+principalType        : ServicePrincipal
+resourceDisplayName  : Microsoft Graph
+resourceId           : c44d6d94-e2cc-4f30-a0d0-2e37682b2978
+
+```
