@@ -48,28 +48,46 @@ Account                              SubscriptionName TenantId                  
 -------                              ---------------- --------                             -----------
 3329FEA7-642E-4C09-B1AD-D8EDBE140267 PharmaCorp       e0f999c1-86ee-47a0-bfd5-18470154b7cd AzureCloud
 
- $keyvault= Get-AzKeyVault
+$KeyVault= Get-AzKeyVault
 WARNING: We have migrated the API calls for this cmdlet from Azure Active Directory Graph to Microsoft Graph.
 Visit https://go.microsoft.com/fwlink/?linkid=2181475 for any permission issues.
-PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> $KeyvaultSecretName = Get-AzKeyVaultSecret -VaultName $Keyvault.VaultName
-PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> $KeyvaultSecretName
-
-
-Vault Name   : compositionsecrets
-Name         : compositionprocessing-masterkey
-Version      :
-Id           : https://compositionsecrets.vault.azure.net:443/secrets/compositionprocessing-masterkey
-Enabled      : True
-Expires      :
-Not Before   :
-Created      : 5/2/2023 10:11:20 AM
-Updated      : 5/2/2023 10:11:20 AM
-Content Type :
-Tags         :
-
-
-
-PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> $Encryptedvalue = Get-AzKeyVaultSecret -VaultName $keyvault.VaultName -Name $KeyvaultSecretName.Name -AsPlainText
-PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> $Encryptedvalue
+$keyVault.VaultName
+compositionsecrets
+$KeyVaultSecretName = Get-AzKeyVaultSecret -VaultName $KeyVault.VaultName
+$KeyvaultSecretName.Name
+compositionprocessing-masterkey
+$Encryptedvalue = Get-AzKeyVaultSecret -VaultName $KeyVault.VaultName -Name $KeyVaultSecretName.Name -AsPlainText
+$EncryptedValue = Get-AzKeyVaultSecret -VaultName $KeyVault.VaultName -Name $KeyVaultSecretName.Name -AsPlainText
+$EncryptedValue
 MtK4CFkZF0Hx11MKfD3nz0FHfKMRJzIeuKY/T+O9Y/VXOkTc8LtpzqNgBD8ObB0ZEqpJgwAXBk1xHbK/JbT4lWEHikNKq5o3g86SyiSKEyYYh//cVU6yc1SkprKCPuNYWXQqosvq1Y4r3zfRsL5C4dKWaatBNDj2LhuH5bFxOlYhAlCmMWSRXm44mJYBrbFlplvIsAX/c40tRXL6HpgTxA++FWyoXfwUtDqhHcNL/cH0BbX/bQAaxSoQT1frw2P1DZvVfqFEdKBIJKMBP4npMWLL1WB9XwzMT4CEUAoUHSxxk02ShKdor5cigUPK52jqEzEPTNmZduR8s2/9dBRM7g==
+```
+Extract key:
+```
+PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> $keyVaultKey = Get-AzKeyVaultKey -VaultName $keyvault.VaultName
+PS C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140> $keyVaultKey
+
+
+Vault/HSM Name : compositionsecrets
+Name           : EncryptionKey
+Version        :
+Id             : https://compositionsecrets.vault.azure.net:443/keys/EncryptionKey
+Enabled        : True
+Expires        :
+Not Before     :
+Created        : 6/30/2022 2:43:34 PM
+Updated        : 6/30/2022 2:43:34 PM
+Recovery Level : Recoverable+Purgeable
+Tags           :
+
+```
+Decrypt secrets:
+
+```
+Invoke-AzKeyVaultKeyOperation -Operation Decrypt -Algorithm RSA1_5 -VaultName $KeyVault.VaultName -Name $KeyVaultKey.Name -Value (ConvertTo-SecureString -String $EncryptedValue -AsPlainText -Force) | FL
+
+
+KeyId     : https://compositionsecrets.vault.azure.net/keys/EncryptionKey/e117ee35db434bc799fff01f5f36fea3
+Result    : 7JGHkhp1cWbNdZbZmEsdSqwwu2p-pbG7afGcc55qNyWUAzFufM557w==
+Algorithm : RSA1_5
+
 ```
