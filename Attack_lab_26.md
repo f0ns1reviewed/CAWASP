@@ -55,3 +55,18 @@ This XML file does not appear to have any style information associated with it. 
 <NextMarker/>
 </EnumerationResults>
 ```
+Mapped.xml for API endpoint:
+``
+
+https://billingprocessorstg.blob.core.windows.net/mariewilliams/mapped.xml
+```
+Response:
+```
+<FileShare>
+<Name>billingprocessor9a71</Name>
+<Url>https://billingprocessorstg.file.core.windows.net/billingprocessor9a71</Url>
+<Properties>
+<Content>P3N2PTIwMjItMTEtMDImc3M9ZiZzcnQ9c2NvJnNwPXJsJnNlPTIwMjQtMDItMjlUMjA6MTc6NDZaJnN0PTIwMjMtMTAtMDFUMTE6MTc6NDZaJnNwcj1odHRwcyZzaWc9Um41SWV5eE0zSVZ6ckRTNTFPOHlQYTB0WmY3QzZWOEFvUm81TE5ScllOayUzRA==</Content>
+</Properties>
+</FileShare>
+```
