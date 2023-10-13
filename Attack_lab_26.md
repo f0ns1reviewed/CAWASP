@@ -78,3 +78,68 @@ f0ns1@f0ns1-msi:~$ echo "P3N2PTIwMjItMTEtMDImc3M9ZiZzcnQ9c2NvJnNwPXJsJnNlPTIwMjQ
 
 https://billingprocessorstg.file.core.windows.net/billingprocessor9a71?sv=2022-11-02&ss=f&srt=sco&sp=rl&se=2024-02-29T20:17:46Z&st=2023-10-01T11:17:46Z&spr=https&sig=Rn5IeyxM3IVzrDS51O8yPa0tZf7C6V8AoRo5LNRrYNk%3D
 ```
+Using Azure FIle connector Software:
+_init_.py
+```
+import logging
+
+import azure.functions as func
+
+
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+
+    connection_string = "https://phcbillingstorage.blob.core.windows.net/?sv=2022-11-02&ss=b&srt=sco&sp=rltfx&se=2024-03-29T20:32:05Z&st=2023-10-01T12:32:05Z&spr=https&sig=pCWp4V0bad2eao9hXvcddvu5bpttA%2F45tm%2FAqC66vJo%3D"
+    from azure.storage.blob import BlobServiceClient
+    blob_service_client = BlobServiceClient.from_connection_string(self.connection_string)
+
+    # Get account information for the Blob Service
+    account_info = blob_service_client.get_account_information()
+
+    return func.HttpResponse(f"{account_info}")
+
+```
+config.json
+```
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }
+  ]
+}
+```
+hosts.json:
+```
+{
+  "version": "2.0",
+  "extensionBundle": {
+    "id": "Microsoft.Azure.Functions.ExtensionBundle",
+    "version": "[2.*, 3.0.0)"
+  }
+}
+```
+Primary key:
+```
+Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
+```
+Primary connection String:
+```
+AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;
+```
+Permissinos:
+```
+Full
+```
