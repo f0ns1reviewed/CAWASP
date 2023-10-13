@@ -12,6 +12,7 @@ Certification
 7. [Attack lab 19](Attack_lab_19.md)
 8. [Attack lab 20](Attack_lab_20.md)
 9. [Attack_lab_26](Attack_lab_26.md)
+10. [Attack_lab_27](Attack_lab_27.md)
 
 
 
