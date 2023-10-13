@@ -70,3 +70,11 @@ Response:
 </Properties>
 </FileShare>
 ```
+
+complete urld etected:
+```
+f0ns1@f0ns1-msi:~$ echo "P3N2PTIwMjItMTEtMDImc3M9ZiZzcnQ9c2NvJnNwPXJsJnNlPTIwMjQtMDItMjlUMjA6MTc6NDZaJnN0PTIwMjMtMTAtMDFUMTE6MTc6NDZaJnNwcj1odHRwcyZzaWc9Um41SWV5eE0zSVZ6ckRTNTFPOHlQYTB0WmY3QzZWOEFvUm81TE5ScllOayUzRA==" | base64 -d
+?sv=2022-11-02&ss=f&srt=sco&sp=rl&se=2024-02-29T20:17:46Z&st=2023-10-01T11:17:46Z&spr=https&sig=Rn5IeyxM3IVzrDS51O8yPa0tZf7C6V8AoRo5LNRrYNk%3Df0ns1@f0ns1-msi:~$ 
+
+https://billingprocessorstg.file.core.windows.net/billingprocessor9a71?sv=2022-11-02&ss=f&srt=sco&sp=rl&se=2024-02-29T20:17:46Z&st=2023-10-01T11:17:46Z&spr=https&sig=Rn5IeyxM3IVzrDS51O8yPa0tZf7C6V8AoRo5LNRrYNk%3D
+```
