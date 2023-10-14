@@ -5,9 +5,11 @@
 − Read the final flag.
 ```
 
+```
 User: phcvaccinedata@paharmacorphq.onmicrosoft.com
 Password: QmzuV{6}(X]reTG2r){
 login: portal.azure.com
+```
 
 Data explorer: /vaccinename
 
